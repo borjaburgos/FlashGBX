@@ -1,4 +1,12 @@
 # Release notes
+### v5.2.1.post1 (GBxCart RW v1.3 test release, 2026-11-05)
+- Restores GBxCart RW v1.3 operation with the bundled LK L1 firmware dated 2024-03-01, using the existing protocol implementation
+- Stock official R firmware remains detectable and is routed to the existing v1.3 L1 firmware updater
+- Retains legacy hardware/firmware capability restrictions and conservative 1 Mbaud, 256-byte transfers
+- Adds firmware-policy, emulated serial-protocol and Qt updater regression tests
+- Provides native Apple silicon and Intel Mac DMGs, with packaged-app smoke checks and SHA-256 checksums
+- Physical GBxCart RW v1.3 testing is pending; see docs/GBxCart-RW-v1.3-testing.md
+
 ### v5.2.1 (released 2026-11-01)
 - Updated the FlashGBX LK Firmware to version L16, adding e-Reader scanning, device serial number queries, unlock sequence replay and faster cartridge clock generation
 - Added a Game Boy Camera live viewer with automatic exposure, brightness and contrast controls, plus continuous image-file updates via `--gbcamera-live-image` (requires firmware L16 and a connected CLK pin)

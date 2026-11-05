@@ -1,8 +1,6 @@
 name: macOS
 
 on:
-  release:
-    types: [published]
   workflow_dispatch:
     inputs:
       version:
@@ -64,6 +62,13 @@ jobs:
           python -m venv "$VENV_PATH"
           source "$VENV_PATH/bin/activate"
           python -m pip install pyinstaller==6.11.0 Pillow==10.3.0 PySide6-Essentials==6.7.2 pyserial==3.5 reedsolo==1.7.0 python-dateutil==2.9.0.post0 requests==2.32.3 packaging==25.0 urllib3==2.7.0 idna==3.19 charset-normalizer==3.5.1 certifi==2026.7.22 six==1.17.0
+
+      - name: Test GBxCart RW v1.3 support
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          source "$VENV_PATH/bin/activate"
+          python -m unittest discover -s tests -v
 
       - name: Set up libmgba build tools
         run: brew install ninja
@@ -166,14 +171,14 @@ jobs:
             'CFBundleName': 'FlashGBX',
             'CFBundleDisplayName': 'FlashGBX',
             'CFBundleGetInfoString': 'Interface software for GB/GBC/GBA cart readers',
-            'CFBundleShortVersionString': os.environ['VERSION'],
-            'CFBundleIdentifier': 'com.lesserkuma.FlashGBX',
+            'CFBundleShortVersionString': os.environ['VERSION'].split('.post')[0],
+            'CFBundleIdentifier': 'com.borjaburgos.FlashGBX',
           }
           app = BUNDLE(
             coll,
             name='FlashGBX.app',
             icon='FlashGBX/res/icon.ico',
-            bundle_identifier='com.lesserkuma.FlashGBX',
+            bundle_identifier='com.borjaburgos.FlashGBX',
             info_plist=info_plist,
           )
           PYINSTALLER_SPEC
@@ -202,6 +207,13 @@ jobs:
           codesign --force --sign - dist/FlashGBX.app/Contents/Resources/res/libmgba-macos-${{ matrix.arch }}.dylib
           codesign --force --deep --sign - dist/FlashGBX.app
           codesign --verify --deep --strict dist/FlashGBX.app
+
+      - name: Smoke test packaged application
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          source "$VENV_PATH/bin/activate"
+          python .github/build/macOS/verify_bundle.py dist/FlashGBX.app ${{ matrix.arch }}
 
       - name: Create DMG
         run: |
@@ -240,17 +252,16 @@ jobs:
           done
           hdiutil verify "$dmg_path"
 
+      - name: Checksum disk image
+        run: |
+          cd dist
+          shasum -a 256 "FlashGBX-${VERSION}_macOS-${{ matrix.arch }}.dmg" > "FlashGBX-${VERSION}_macOS-${{ matrix.arch }}.dmg.sha256"
+
       - name: Create artifact
-        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
           name: FlashGBX_macOS-${{ matrix.arch }}
-          path: ${{ github.workspace }}/dist/FlashGBX-${{ env.VERSION }}_macOS-${{ matrix.arch }}.dmg
+          path: |
+            ${{ github.workspace }}/dist/FlashGBX-${{ env.VERSION }}_macOS-${{ matrix.arch }}.dmg
+            ${{ github.workspace }}/dist/FlashGBX-${{ env.VERSION }}_macOS-${{ matrix.arch }}.dmg.sha256
           if-no-files-found: error
-
-      - name: Upload release asset
-        if: github.event_name == 'release'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-        run: gh release upload "$VERSION" "dist/FlashGBX-${VERSION}_macOS-${{ matrix.arch }}.dmg" --clobber

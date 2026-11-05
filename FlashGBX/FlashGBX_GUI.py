@@ -1175,7 +1175,7 @@ class FlashGBX_GUI(QtWidgets.QMainWindow):
 		try:
 			import requests
 			try:
-				ret = requests.get("https://api.github.com/repos/Lesserkuma/FlashGBX/releases/latest", allow_redirects=True, timeout=1.5)
+				ret = requests.get("https://api.github.com/repos/borjaburgos/FlashGBX/releases/latest", allow_redirects=True, timeout=1.5)
 			except requests.exceptions.ConnectTimeout as e:
 				self.UPDATE_CHECK_RESULTS.put((False, __("Error: Update check failed due to a connection timeout. Please check your internet connection."), str(e)))
 				return
@@ -1197,7 +1197,7 @@ class FlashGBX_GUI(QtWidgets.QMainWindow):
 		if error is not None:
 			print(error, detail, sep="\n")
 			return
-		site = "https://github.com/Lesserkuma/FlashGBX/releases/latest"
+		site = "https://github.com/borjaburgos/FlashGBX/releases"
 		if ret.status_code == 200:
 			ret = ret.content
 			try:

@@ -1,6 +1,6 @@
 [project]
 name = "FlashGBX"
-version = "5.2.1"
+version = "5.2.1.post1"
 description = "Reads and writes Game Boy and Game Boy Advance cartridge data"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -36,8 +36,8 @@ qt5 = ["PySide2>=5.14", "Pillow<10.0.0"]
 qt6 = ["PySide6"]
 
 [project.urls]
-Source = "https://github.com/Lesserkuma/FlashGBX/"
-Tracker = "https://github.com/Lesserkuma/FlashGBX/issues"
+Source = "https://github.com/borjaburgos/FlashGBX/"
+Tracker = "https://github.com/borjaburgos/FlashGBX/issues"
 
 [project.scripts]
 flashgbx = "FlashGBX.FlashGBX:main"

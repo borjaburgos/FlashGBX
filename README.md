@@ -4,6 +4,10 @@ for Windows, Linux, macOS (→ [Download](#downloads))
 
 <img src="https://raw.githubusercontent.com/Lesserkuma/FlashGBX/master/.github/01.png" alt="FlashGBX on Windows 11" width="500"><br><img src="https://raw.githubusercontent.com/Lesserkuma/FlashGBX/master/.github/02.png" alt="GB Camera Album Viewer" width="500">
 
+## GBxCart RW v1.3 compatibility fork
+
+This unofficial fork restores GBxCart RW v1.3 support on upstream FlashGBX 5.2.1 using its original bundled LK L1 firmware. Native Apple silicon and Intel Mac packages are available in [this fork's releases](https://github.com/borjaburgos/FlashGBX/releases). Physical hardware testing is still pending; see the [installation and friend testing guide](docs/GBxCart-RW-v1.3-testing.md) for firmware requirements, limitations and checks.
+
 ## Introduction
 
 ### Software features
@@ -20,7 +24,7 @@ for Windows, Linux, macOS (→ [Download](#downloads))
 
 ### Compatible cartridge reader/writer hardware
 
-- [GBxCart RW](https://www.gbxcart.com/) (tested with v1.4, v1.4a and v1.4c)
+- [GBxCart RW](https://www.gbxcart.com/) (upstream tested with v1.4, v1.4a and v1.4c; v1.3 + LK L1 restored experimentally in this fork)
 - [GBFlash](https://github.com/simonkwng/GBFlash) (tested with v1.2 and v1.3)
 - [Joey Jr](https://bennvenn.myshopify.com/collections/game-cart-to-pc-interface/products/usb-gb-c-cart-dumper-the-joey-jr) (tested with V2++)
 - [Game Bub](https://gamebub.net/)

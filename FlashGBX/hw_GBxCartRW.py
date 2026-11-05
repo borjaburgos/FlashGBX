@@ -18,8 +18,8 @@ class GbxDevice(LK_Device):
 	DEVICE_MAX_FW = 1
 	DEVICE_LATEST_FW_TS = { 4:1709317610, 5:1793184971, 6:1793184971, 2:0, 90:0, 100:0 }
 	PCB_VERSIONS = { 5:'v1.4', 6:'v1.4a/b/c', 2:'v1.1/v1.2', 4:'v1.3', 90:'XMAS v1.0', 100:'Mini v1.0' }
-	DEVICE_LABEL_LONG = "GBxCart RW v1.4 or v1.4a/b/c"
-	DEVICE_LABEL_SHORT = "GBxCart RW v1.4"
+	DEVICE_LABEL_LONG = "GBxCart RW v1.3, v1.4 or v1.4a/b/c"
+	DEVICE_LABEL_SHORT = "GBxCart RW v1.3/v1.4"
 	FWUPDATE_ACTION = "fwupdate-gbxcartrw"
 	CLI_UPDATER_METHOD = "UpdateFirmwareGBxCartRW"
 	DEVICE_SUPPORT_MESSAGE = "For help with your GBxCart RW, please visit the insideGadgets Discord:\nhttps://gbxcart.com/discord"
@@ -369,7 +369,15 @@ class GbxDevice(LK_Device):
 
 	def FirmwareUpdateAvailable(self):
 		self.FW_UPDATE_REQ = False
-		if self.FW["pcb_ver"] in (2, 4, 90, 100) or (self.FW["fw_ver"] == 0 and self.FW["pcb_ver"] == 101):
+		if self.FW["pcb_ver"] == 4: # v1.3 uses the separate, bundled L1 firmware
+			# Keep the GUI/CLI firmware gate, but allow the known L1 build.
+			# Official R firmware and unknown builds must use the v1.3 updater.
+			self.FW_UPDATE_REQ = not (
+				self.FW.get("cfw_id") == "L" and self.FW["fw_ver"] == 1
+				and self.FW["fw_ts"] == self.DEVICE_LATEST_FW_TS[4]
+			)
+			return self.FW_UPDATE_REQ
+		if self.FW["pcb_ver"] in (2, 90, 100) or (self.FW["fw_ver"] == 0 and self.FW["pcb_ver"] == 101):
 			self.FW_UPDATE_REQ = 2
 			return True
 		if self.FW["pcb_ver"] not in (5, 6): return False
