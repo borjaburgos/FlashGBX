@@ -132,8 +132,8 @@ jobs:
           ]
           
           a = Analysis(
-            ['run.py'],
-            pathex=[],
+            ['.github/build/macOS/launcher.py'],
+            pathex=['.'],
             binaries=[],
             datas=[],
             hiddenimports=hiddenimports,
@@ -185,7 +185,6 @@ jobs:
           rm -r FlashGBX/config
           source "$VENV_PATH/bin/activate"
           pyinstaller FlashGBX.spec
-          mkdir dist/FlashGBX.app/Contents/MacOS/config
           mkdir -p dist/FlashGBX.app/Contents/Resources/res
           mkdir -p dist/FlashGBX.app/Contents/Resources/locale
           cp -R FlashGBX/res/. dist/FlashGBX.app/Contents/Resources/res/

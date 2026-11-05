@@ -7,7 +7,7 @@ This fork restores the v1.3 support disabled in upstream FlashGBX 5.2.1. It is b
 ## Install on a Mac
 
 1. Download the DMG for your Mac from [this fork's releases](https://github.com/borjaburgos/FlashGBX/releases): `arm64` for Apple silicon (M1 or newer), `x86_64` for Intel. The packaged builds target macOS 15 or newer, as upstream does. No Python installation is needed.
-2. Open the DMG and drag FlashGBX to Applications. Quit other programs using the reader.
+2. Open the DMG and drag FlashGBX to Applications. Quit other programs using the reader. Settings are stored in your user configuration directory, outside the signed app; use the app's configuration-directory menu item to find them.
 3. The app is ad hoc signed, without an Apple Developer ID or notarization. If macOS blocks it, use System Settings → Privacy & Security → Open Anyway after attempting to open it. Only for this downloaded app, if needed, run `xattr -dr com.apple.quarantine /Applications/FlashGBX.app` in Terminal, then open it again.
 4. Optional: verify the download in Terminal using `shasum -a 256 -c FlashGBX-5.2.1.post1_macOS-arm64.dmg.sha256` (substitute `x86_64` for Intel). Keep the DMG and its checksum file together.
 

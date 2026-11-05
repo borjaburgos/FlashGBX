@@ -5,6 +5,7 @@
 - Retains legacy hardware/firmware capability restrictions and conservative 1 Mbaud, 256-byte transfers
 - Adds firmware-policy, emulated serial-protocol and Qt updater regression tests
 - Provides native Apple silicon and Intel Mac DMGs, with packaged-app smoke checks and SHA-256 checksums
+- Stores Mac app settings outside the signed application bundle and verifies the signature again after launch
 - Physical GBxCart RW v1.3 testing is pending; see docs/GBxCart-RW-v1.3-testing.md
 
 ### v5.2.1 (released 2026-11-01)

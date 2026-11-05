@@ -44,4 +44,6 @@ finally:
     stdout, stderr = process.communicate(timeout=10)
     print(stdout)
     print(stderr, file=sys.stderr)
+subprocess.run(["codesign", "--verify", "--deep", "--strict", str(app)], check=True)
+assert not (app / "Contents/MacOS/config").exists(), "Settings must stay outside the signed bundle"
 print(f"Verified {arch}: signature, architecture, resources, CLI help and GUI startup")
